@@ -6,7 +6,7 @@
 package controller;
 
 import entity.RoleHRM;
-import entity.UserHRM;
+import entity.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -28,11 +28,11 @@ public class UserController implements Serializable {
     /**
      * Fields
      */
-    private UserHRM muser;
-    private List<UserHRM> mlistUser;
+    private User muser;
+    private List<User> mlistUser;
     private UserModel muserModel;
-    private List<UserHRM> mlistUserFilter;
-    private UserHRM[] mlistUserSelected;
+    private List<User> mlistUserFilter;
+    private User[] mlistUserSelected;
     private List<RoleHRM> mlistRole;
     private boolean mbView;
     private PersistAction mflag;
@@ -53,7 +53,6 @@ public class UserController implements Serializable {
         try {
             //Initial
             muserModel = new UserModel();
-            mlistUser = muserModel.getAll();
             RoleModel temp0 = new RoleModel();
             mlistRole = temp0.getAllRole();
             mflag = PersistAction.SELECT;
@@ -67,25 +66,25 @@ public class UserController implements Serializable {
     //Methods
     ////////////////////////////////////////////////////////
     /**
-     * Add UserHRM
+     * Add User
      *
      */
     ////////////////////////////////////////////////////////
     public void addUser(ActionEvent evt) {
         mflag = PersistAction.CREATE;
-        muser = new UserHRM();
+        muser = new User();
         mbView = false;
     }
 
     //Methods
     ////////////////////////////////////////////////////////
     /**
-     * Edit UserHRM
+     * Edit User
      *
      * @param user *
      */
     ////////////////////////////////////////////////////////
-    public void editUser(UserHRM user) {
+    public void editUser(User user) {
         mflag = PersistAction.UPDATE;
         mbView = false;
         this.muser = user;
@@ -95,12 +94,12 @@ public class UserController implements Serializable {
     //Methods
     ////////////////////////////////////////////////////////
     /**
-     * Prepare Delete UserHRM
+     * Prepare Delete User
      *
      * @param user *
      */
     ////////////////////////////////////////////////////////
-    public void preDeleteUser(UserHRM user) {
+    public void preDeleteUser(User user) {
         mflag = PersistAction.DELETE;
         this.muser = user;
 
@@ -109,7 +108,7 @@ public class UserController implements Serializable {
     //Methods
     ////////////////////////////////////////////////////////
     /**
-     * Delete UserHRM
+     * Delete User
      *
      */
     ////////////////////////////////////////////////////////
@@ -130,30 +129,7 @@ public class UserController implements Serializable {
     //Methods
     ////////////////////////////////////////////////////////
     /**
-     * Delete Multi UserHRM
-     *
-     */
-    ////////////////////////////////////////////////////////
-    public void deleteAllUser() {
-        try {
-            //Delete database
-            muserModel.deleteUser(mlistUserSelected);
-            mlistUser = muserModel.getAll();
-            mlistUserSelected = null;
-            mlistUserFilter = null;
-            mflag = PersistAction.SELECT;
-            //Message to client
-
-        } catch (Exception ex) {
-            JsfUtil.addErrorMessage(ex.getMessage());
-        }
-
-    }
-
-    //Methods
-    ////////////////////////////////////////////////////////
-    /**
-     * Save UserHRM
+     * Save User
      *
      */
     ////////////////////////////////////////////////////////
@@ -170,7 +146,6 @@ public class UserController implements Serializable {
                 JsfUtil.UpdateSuccessMsg();
             }
             //Set Status
-            mlistUser = muserModel.getAll();
             mlistUserFilter = null;
             mbView = true;
             mflag = PersistAction.SELECT;
@@ -210,35 +185,35 @@ public class UserController implements Serializable {
         this.mbView = bView;
     }
 
-    public UserHRM getMuser() {
+    public User getMuser() {
         return muser;
     }
 
-    public void setMuser(UserHRM user) {
+    public void setMuser(User user) {
         this.muser = user;
     }
 
-    public List<UserHRM> getMlistUser() {
+    public List<User> getMlistUser() {
         return mlistUser;
     }
 
-    public void setmlistUser(List<UserHRM> listUser) {
+    public void setmlistUser(List<User> listUser) {
         this.mlistUser = listUser;
     }
 
-    public UserHRM[] getMlistUserSelected() {
+    public User[] getMlistUserSelected() {
         return mlistUserSelected;
     }
 
-    public void setMlistUserSelected(UserHRM[] listUserSelected) {
+    public void setMlistUserSelected(User[] listUserSelected) {
         this.mlistUserSelected = listUserSelected;
     }
 
-    public List<UserHRM> getMlistUserFilter() {
+    public List<User> getMlistUserFilter() {
         return mlistUserFilter;
     }
 
-    public void setMlistUserFilter(List<UserHRM> listUserFilter) {
+    public void setMlistUserFilter(List<User> listUserFilter) {
         this.mlistUserFilter = listUserFilter;
     }
 

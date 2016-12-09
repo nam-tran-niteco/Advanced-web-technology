@@ -29,7 +29,7 @@ public class DBUtility {
 //        String url = "jdbc:oracle:thin:@localhost:1521:THN";
 //        mConn = DriverManager.getConnection(url, "telsoft01", "telsoft");
         Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "jdbc:mysql://localhost:3306/diary";
         mConn = DriverManager.getConnection(url, "root", "");
 //        String url = "jdbc:mysql://localhost/test";
 //        Class.forName ("com.mysql.jdbc.Driver");

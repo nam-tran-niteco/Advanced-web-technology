@@ -5,7 +5,7 @@
  */
 package controller;
 
-import entity.UserHRM;
+import entity.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpSession;
 import model.UserModel;
 import util.JsfUtil;
@@ -27,29 +26,29 @@ import util.JsfUtil;
 @RequestScoped
 public class SecurityController {
 
-    UserHRM user;
+    User user;
     UserModel userModel;
 
     /**
      * Creates a new instance of SecurityController
      */
     public SecurityController() {
-        user = new UserHRM();
+        user = new User();
         userModel = new UserModel();
     }
 
     //Getter and Setter
-    public UserHRM getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserHRM user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
     public void logIn(ActionEvent evt) {
         try {
-            UserHRM temp = userModel.checkUser(user.getEmail(), user.getPassword());
+            User temp = userModel.checkUser(user.getUsername(), user.getPassword());
             FacesContext context = FacesContext.getCurrentInstance();
             NavigationHandler nh = context.getApplication().getNavigationHandler();
             if (temp != null) {
@@ -58,12 +57,11 @@ public class SecurityController {
                 nh.handleNavigation(context, null, "index");
                 //System.out.println("OK 123");
             } else {
-                JsfUtil.addErrorMessage("Email hoặc mật khẩu bị sai");
+                JsfUtil.addErrorMessage("Username or password is wrong");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             JsfUtil.addErrorMessage(ex.getMessage());
             Logger.getLogger(SecurityController.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
 
@@ -73,5 +71,19 @@ public class SecurityController {
         session.setAttribute("user", null);
         NavigationHandler nh = context.getApplication().getNavigationHandler();
         nh.handleNavigation(context, null, "logout");
+    }
+    
+    public void register(ActionEvent evt) {
+        try {
+            int isAddSuccess = userModel.addUser(user);
+            FacesContext context = FacesContext.getCurrentInstance();
+            NavigationHandler nh = context.getApplication().getNavigationHandler();
+            if ( isAddSuccess == 1 ) {
+                nh.handleNavigation(context, null, "login");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JsfUtil.addErrorMessage(ex.getMessage());
+            Logger.getLogger(SecurityController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

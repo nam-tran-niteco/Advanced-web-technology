@@ -8,7 +8,9 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>Login Form</title>
+                <ui:insert name="page-title">
+                    <title>Login page</title>
+                </ui:insert>
             </f:facet>
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round"/>
 
@@ -61,12 +63,12 @@
 
                 /* ---------- LOGIN ---------- */
 
-                #login {
+                #form-signin {
                     margin: 50px auto;
                     width: 400px;
                 }
 
-                #login h2 {
+                #form-signin h2 {
                     background-color: #f95252;
                     -webkit-border-radius: 20px 20px 0 0;
                     -moz-border-radius: 20px 20px 0 0;
@@ -76,41 +78,44 @@
                     padding: 20px 26px;
                 }
 
-                #login h2 span[class*="fontawesome-"] {
+                #form-signin h2 span[class*="fontawesome-"] {
                     margin-right: 14px;
                 }
 
-                #login fieldset {
+                #form-signin #frmLogin {
                     background-color: #fff;
                     -webkit-border-radius: 0 0 20px 20px;
                     -moz-border-radius: 0 0 20px 20px;
                     border-radius: 0 0 20px 20px;
+                }
+                
+                #form-signin fieldset {
                     padding: 20px 26px;
                 }
 
-                #login fieldset p {
+                #form-signin fieldset p {
                     color: #777;
                     margin-bottom: 14px;
                 }
 
-                #login fieldset p:last-child {
+                #form-signin fieldset p:last-child {
                     margin-bottom: 0;
                 }
 
-                #login fieldset input {
+                #form-signin fieldset input {
                     -webkit-border-radius: 3px;
                     -moz-border-radius: 3px;
                     border-radius: 3px;
                 }
 
-                #login fieldset input[type="text"], #login fieldset input[type="password"] {
+                #form-signin fieldset input[type="text"], #form-signin fieldset input[type="password"] {
                     background-color: #eee;
                     color: #777;
                     padding: 4px 10px;
                     width: 328px;
                 }
 
-                #login fieldset input[type="submit"] {
+                #form-signin fieldset input[type="submit"] {
                     background-color: #33cc77;
                     color: #fff;
                     display: block;
@@ -119,34 +124,28 @@
                     width: 100px;
                 }
 
-                #login fieldset input[type="submit"]:hover {
+                #form-signin fieldset input[type="submit"]:hover {
                     background-color: #28ad63;
                 }
             </style>
         </h:head>
         <h:body>
 
-            <div id="login">
+            <div id="form-signin">
 
-                <h2><span class="fontawesome-lock"></span>Sign In</h2>
-
-                <h:form id="frmLogin" >
-                    <fieldset>
-                        <p:messages  id="pmessages" showDetail="true" showSummary="false"  closable="true" />
-                        <p><p:outputLabel value="Email " for="txtEmail"/></p>
-                        <p><p:inputText id="txtEmail" value="#{securityController.user.email}"  required="true" requiredMessage="Nhập Email"/></p>
-
-                        <p> <p:outputLabel value="Mật khẩu " for="txtPassword"/></p>
-                        <p><p:password id="txtPassword" value="#{securityController.user.password}"  required="true" requiredMessage="Nhập mật khẩu"/></p> <!-- JS because of IE support; better: placeholder="password" -->
-
-                        <p><p:commandButton id="btnLogin" value="Đăng nhập"  actionListener="#{securityController.logIn}" update="pmessages" /></p>
-                    </fieldset>
-                </h:form>
+                <ui:insert name="form-title">
+                    <h2><span class="fontawesome-lock"></span>Sign In</h2>
+                </ui:insert>
+                
+                <ui:insert name="form-fields">
+                </ui:insert>
 
             </div> <!-- end login -->
 
         </h:body>
     </f:view>
 </html>
+
+
 
 

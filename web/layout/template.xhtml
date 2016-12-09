@@ -26,7 +26,7 @@
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header                   
+                    
                     <h:form id="frmMenuBar">   
                         <p align="right">
                         <p:commandLink actionListener = "#{securityController.logOut}" value="Log Out"/>
@@ -43,8 +43,9 @@
                     <h:form id="frmMenu">   
                         <p:menu>
                             <p:submenu label="Quản trị website">
-                                <p:menuitem value="Quản lý người dùng" url="user.xhtml" />
-                                <p:menuitem value="Quản lý quyền" url="role.xhtml" />
+                                <p:menuitem value="Quản lý người dùng" url="/pages/user.xhtml" />
+                                <p:menuitem value="Quản lý quyền" url="/pages/role.xhtml" />
+                                <p:menuitem value="Đăng kí" url="/pages/register.xhtml" />
                             </p:submenu>
                         </p:menu>
                     </h:form>  

@@ -3,9 +3,15 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/layout/signin_template.xhtml">
+        <ui:define name="page-title">
+            <title>Register page</title>
+        </ui:define>
+        <ui:define name="form-title">
+            <h2><span class="fontawesome-lock"></span>Register</h2>
+        </ui:define>
         <ui:define name="form-fields">
             <h:form id="frmLogin" >
                 <fieldset>
@@ -16,15 +22,18 @@
                     <p> <p:outputLabel value="Password" for="txtPassword"/></p>
                     <p><p:password id="txtPassword" value="#{securityController.user.password}"  required="true" requiredMessage="Nhập mật khẩu"/></p> <!-- JS because of IE support; better: placeholder="password" -->
 
-                    <p><p:commandButton id="btnLogin" value="Login"  actionListener="#{securityController.logIn}" update="pmessages" /></p>
-                    <h:outputText>If you do not have an account, click here for </h:outputText>
-                    <h:outputLink value="register.xhtml">register</h:outputLink>
-                </fieldset>
-            </h:form>
+                    <p> <p:outputLabel value="Full Name" for="txtFullname"/></p>
+                    <p><p:inputText id="txtFullname" value="#{securityController.user.fullname}"  required="true" requiredMessage="Nhập mật khẩu"/></p> <!-- JS because of IE support; better: placeholder="password" -->
             
+                    <p> <p:outputLabel value="Email" for="txtEmail"/></p>
+                    <p><p:inputText id="txtEmail" value="#{securityController.user.email}"  required="true" requiredMessage="Nhập mật khẩu"/></p> <!-- JS because of IE support; better: placeholder="password" -->
+            
+                    <p><p:commandButton id="btnLogin" value="Register"  actionListener="#{securityController.register}" update="pmessages" /></p>
+                    <h:outputLink value="login.xhtml">Back to login</h:outputLink>
+                </fieldset>
+                
+            </h:form>
         </ui:define>
     </ui:composition>
-
 </html>
-
 

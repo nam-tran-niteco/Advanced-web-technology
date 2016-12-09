@@ -68,17 +68,18 @@ public class RoleController implements Serializable {
 
     public void save(ActionEvent evt) {
         try {
-            if (mflag.equals("add")) {
-                roleModel.addRole(mrole);
-            } else if (mflag.equals("edit")) {
-                roleModel.updateRole(mrole);
+            switch (mflag) {
+                case "add":
+                    roleModel.addRole(mrole);
+                    break;
+                case "edit":
+                    roleModel.updateRole(mrole);
+                    break;
             }
             mlistRole = roleModel.getAllRole();
             mblnView = true;
             mflag = "select";
-        } catch (SQLException ex) {
-            Logger.getLogger(RoleController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RoleController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

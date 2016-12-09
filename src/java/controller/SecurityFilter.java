@@ -5,7 +5,7 @@
  */
 package controller;
 
-import entity.UserHRM;
+import entity.User;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
@@ -27,7 +27,8 @@ public class SecurityFilter implements PhaseListener {
     public void afterPhase(PhaseEvent event) {
         FacesContext fc = event.getFacesContext();
         boolean loginPage = fc.getViewRoot().getViewId().lastIndexOf("login") > -1;
-        if (!loginPage && !isUserLogged()) {
+        boolean registerPage = fc.getViewRoot().getViewId().lastIndexOf("register") > -1;
+        if ( !loginPage && !registerPage && !isUserLogged()) {
             navigate(event, "logout");
         }
     }
@@ -36,7 +37,7 @@ public class SecurityFilter implements PhaseListener {
         //looks session for user 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-        UserHRM user = (UserHRM) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         return user != null;
     }
 

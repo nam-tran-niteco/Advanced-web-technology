@@ -16,7 +16,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>index</from-outcome>
-            <to-view-id>pages/user.xhtml</to-view-id>
+            <to-view-id>pages/userprofile.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

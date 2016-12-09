@@ -2,10 +2,7 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="login.xhtml" x="650" y="150" zoom="true"/>
         <Node id="*" x="477" y="315" zoom="true"/>
-        <Node id="role.xhtml" x="319" y="85" zoom="true"/>
-        <Node id="user.xhtml" x="184" y="263" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
