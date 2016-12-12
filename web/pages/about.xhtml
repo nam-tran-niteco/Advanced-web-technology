@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/layout/keepmemo_template.xhtml">
+
+        <ui:define name="title"> - About</ui:define>
+
+        <ui:define name="intro-header">
+            <header class="intro-header" style="background-image: url('/public/images/home-bg.jpg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <div class="site-heading">
+                                <h1>#{profile.mloggedUser.fullname}'s Profile</h1>
+                                <hr class="small"/>
+                                <span class="subheading">A little bit about yourself</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </ui:define>
+
+        <ui:define name="main-content">
+            <!-- Main Content -->
+            <div class="container" id="about">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                        <h:form class="user-info" id="userInfo">
+                            <div class="user-name user-info-row">
+                                <label for="username">Username</label>
+                                <h:inputText id="username"  value="#{profile.mloggedUser.username}"/>
+                            </div>
+                            <div class="user-fullname user-info-row">
+                                <label for="fullname">Full name</label>
+                                <h:inputText id="fullname"  value="#{profile.mloggedUser.fullname}"/>
+                            </div>
+                            <div class="user-email user-info-row">
+                                <label for="email">Email</label>
+                                <h:inputText id="email"  value="#{profile.mloggedUser.email}"/>
+                            </div>
+                            <div class="user-phone user-info-row">
+                                <label for="phone">Phone Number</label>
+                                <h:inputText id="phone"  value="#{profile.mloggedUser.phone}"/>
+                            </div>
+                            <div class="user-hobby user-info-row">
+                                <label for="hobby">Hobby</label>
+                                <h:inputTextarea id="hobby" value="#{profile.mloggedUser.hobby}"></h:inputTextarea>
+                            </div>
+                            <div class="user-avatar user-info-row">
+                                <label for="avatar">Avatar</label>
+                                <img id="avatar" src="#{profile.mloggedUser.avatar}"/>
+                                <!--<p: style="display: none" value="#{profile.mloggedUser.avatar}"></p:inputFile>-->
+                            </div>
+                            <div class="form-buttons">
+                                <!--<a class="edit-button btn btn-default">Edit</a>-->
+                                <h:commandButton type="submit" styleClass="btn user-info-submit" value="Update Info" 
+                                                 action="#{profile.saveUser}"></h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </ui:define>
+    </ui:composition>
+
+</html>

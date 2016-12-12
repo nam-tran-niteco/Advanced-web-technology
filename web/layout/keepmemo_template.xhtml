@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Diary <ui:insert name="title"></ui:insert></title>
+
+        <!-- icon -->
+        <link rel="icon" href="/public/images/icon1.png"/>
+        <!-- Bootstrap Core CSS -->
+        <link href="/public/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Theme CSS -->
+        <link href="/public/css/keepmemo.css" rel="stylesheet"/>
+
+        <ui:insert name="addition-style"></ui:insert>
+
+        <!-- Custom Fonts -->
+        <link href="/public/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<!--        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'/>-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+
+    <h:body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="/pages/index.html">Start Bootstrap</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <h:form>
+                            <li>
+                                <a href="/pages/index.xhtml">Home</a>
+                            </li>
+                            <li>
+                                <a href="/pages/about.xhtml">About</a>
+                            </li>
+                            <li>
+                                <a href="/pages/friend.xhtml">Friend</a>
+                            </li>
+                            <li>
+                                <h:commandLink actionListener="#{securityController.logOut}" value="Log Out"/>
+                                <!--<a href="#">#{securityController.user.fullname}</a>-->
+                            </li>
+                        </h:form>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Header -->
+        <!-- Set your background image for this header on the line below. -->
+        <ui:insert name="intro-header"></ui:insert>
+
+        <ui:insert name="main-content">
+
+        </ui:insert>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <ul class="list-inline text-center">
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-muted">Copyright &copy; Keep Memo 2016</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- jQuery -->
+        <script src="/public/js/jquery-3.1.1.min.js"></script>
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" />-->
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/public/js/bootstrap.min.js"></script>
+
+        <!-- Contact Form JavaScript -->
+        <script src="/public/js/jqBootstrapValidation.js"></script>
+        <script src="/public/js/contact_me.js"></script>
+
+        <ui:insert name="addition-script"></ui:insert>
+
+        <!-- Theme JavaScript -->
+        <script src="/public/js/keepmemo.js"></script>
+
+    </h:body>
+
+</html>
+

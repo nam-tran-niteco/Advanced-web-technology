@@ -20,6 +20,7 @@ public class User implements Serializable{
     private String email = "";
     private String phone = "";
     private String hobby = "";
+    private String avatar = "/resources/default-avatar.png";
     private int friendStatus;
 
     public User() {
@@ -47,7 +48,7 @@ public class User implements Serializable{
         this.friendStatus = friendStatus;
     }
 
-    public User(long userID, String username, String password, String fullname, String email, String phone, String hobby) {
+    public User(long userID, String username, String password, String fullname, String email, String phone, String hobby, String avatar) {
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -55,6 +56,7 @@ public class User implements Serializable{
         this.email = email;
         this.phone = phone;
         this.hobby = hobby;
+        this.avatar = avatar;
     }
     
     public String getPassword() {
@@ -119,6 +121,14 @@ public class User implements Serializable{
 
     public void setFriendStatus(int friendStatus) {
         this.friendStatus = friendStatus;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     
 }

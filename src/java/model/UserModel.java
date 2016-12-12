@@ -9,14 +9,16 @@ import entity.User;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import util.Constant;
 
 /**
  *
  * @author Tran
  */
-public class UserModel extends DBUtility implements Serializable{
-    
+public class UserModel extends DBUtility implements Serializable {
+
     ////////////////////////////////////////////////////////
     /**
      * getUserByID() User
@@ -47,7 +49,7 @@ public class UserModel extends DBUtility implements Serializable{
         }
         return returnUser;
     }
-    
+
     ////////////////////////////////////////////////////////
     /**
      * getUserByID() User
@@ -59,7 +61,7 @@ public class UserModel extends DBUtility implements Serializable{
      * @throws java.sql.SQLException
      */
     ////////////////////////////////////////////////////////
-    public User getUserByID(User user) throws ClassNotFoundException, SQLException  {
+    public User getUserByID(User user) throws ClassNotFoundException, SQLException {
         User returnUser = null;
         try {
             openConnection();
@@ -76,13 +78,16 @@ public class UserModel extends DBUtility implements Serializable{
                 returnUser.setEmail(mRs.getString("email"));
                 returnUser.setPhone(mRs.getString("phone"));
                 returnUser.setHobby(mRs.getString("hobby"));
+                if (!mRs.getString("avatar").equals("")) {
+                    returnUser.setAvatar(mRs.getString("avatar"));
+                }
             }
         } finally {
             closeAll();
         }
         return returnUser;
     }
-    
+
     ////////////////////////////////////////////////////////
     /**
      * getAllUserByUserId() ListUser
@@ -94,15 +99,15 @@ public class UserModel extends DBUtility implements Serializable{
      * @throws java.sql.SQLException
      */
     ////////////////////////////////////////////////////////
-    public ArrayList<User> getAllUserByUserId(User user) throws ClassNotFoundException, SQLException  {
+    public ArrayList<User> getAllUserByUserId(User user) throws ClassNotFoundException, SQLException {
         ArrayList<User> mlistUser = new ArrayList<>();
         try {
             openConnection();
-            
+
             /**
-             *  Get all user are not current user and current user's friends
+             * Get all user are not current user and current user's friends
              */
-            String strSQL = "SELECT user.userid, username,fullname, email, phone FROM " + Constant.USER_TABLE
+            String strSQL = "SELECT user.userid, username,fullname, email, phone, avatar FROM " + Constant.USER_TABLE
                     + " WHERE user.userid <> ? AND user.userid NOT IN (SELECT friendid FROM friend where friend.userid = ?)";
             mPst = mConn.prepareStatement(strSQL);
             mPst.setLong(1, user.getUserID());
@@ -115,14 +120,17 @@ public class UserModel extends DBUtility implements Serializable{
                 muser.setFullname(mRs.getString("fullname"));
                 muser.setEmail(mRs.getString("email"));
                 muser.setPhone(mRs.getString("phone"));
+                if (!mRs.getString("avatar").equals("")) {
+                    muser.setAvatar(mRs.getString("avatar"));
+                }
                 muser.setFriendStatus(0);
                 mlistUser.add(muser);
             }
-            
+
             /**
-             *  Get all user are current user's friends
+             * Get all user are current user's friends
              */
-            strSQL = "SELECT user.userid, username,fullname, email, phone, status FROM " + Constant.USER_TABLE + ", " + Constant.FRIEND_TABLE
+            strSQL = "SELECT user.userid, username,fullname, email, phone, status, avatar FROM " + Constant.USER_TABLE + ", " + Constant.FRIEND_TABLE
                     + " WHERE friend.userid = ? AND user.userid = friend.friendid";
             mPst = mConn.prepareStatement(strSQL);
             mPst.setLong(1, user.getUserID());
@@ -134,15 +142,24 @@ public class UserModel extends DBUtility implements Serializable{
                 muser.setFullname(mRs.getString("fullname"));
                 muser.setEmail(mRs.getString("email"));
                 muser.setPhone(mRs.getString("phone"));
+                if (!mRs.getString("avatar").equals("")) {
+                    muser.setAvatar(mRs.getString("avatar"));
+                }
                 muser.setFriendStatus(mRs.getInt("status"));
                 mlistUser.add(muser);
             }
         } finally {
             closeAll();
         }
+        if ( !mlistUser.isEmpty() ) Collections.sort(mlistUser, new Comparator<User>() {
+            @Override
+            public int compare(User u1, User u2) {
+                return u1.getUsername().compareToIgnoreCase(u2.getUsername());
+            }
+        });
         return mlistUser;
     }
-    
+
     ////////////////////////////////////////////////////////
     /**
      * Add User
@@ -154,11 +171,11 @@ public class UserModel extends DBUtility implements Serializable{
      * @throws java.sql.SQLException
      */
     ////////////////////////////////////////////////////////
-    public int addUser(User user) throws ClassNotFoundException, SQLException{
+    public int addUser(User user) throws ClassNotFoundException, SQLException {
         try {
             openConnection();
-            String strSQL = "INSERT INTO " + Constant.USER_TABLE + " " + "(username, password, fullname, email, phone, hobby)"
-                    + "VALUES (?, md5(?),?,?,?,?)";
+            String strSQL = "INSERT INTO " + Constant.USER_TABLE + " " + "(username, password, fullname, email, phone, hobby, avatar)"
+                    + "VALUES (?, md5(?),?,?,?,?,?)";
             mPst = mConn.prepareStatement(strSQL);
             mPst.setString(1, user.getUsername());
             mPst.setString(2, user.getPassword());
@@ -166,6 +183,7 @@ public class UserModel extends DBUtility implements Serializable{
             mPst.setString(4, user.getEmail());
             mPst.setString(5, user.getPhone());
             mPst.setString(6, user.getHobby());
+            mPst.setString(7, user.getAvatar());
             mPst.executeUpdate();
 //            return iID;
             return 1;
@@ -173,7 +191,7 @@ public class UserModel extends DBUtility implements Serializable{
             closeAll();
         }
     }
-    
+
     ////////////////////////////////////////////////////////
     /**
      * Edit USER
@@ -189,7 +207,7 @@ public class UserModel extends DBUtility implements Serializable{
         try {
             openConnection();
             String strSQL = "UPDATE " + Constant.USER_TABLE
-                    + " SET username=?,fullname=?,email=?,phone=?,hobby=?"
+                    + " SET username=?,fullname=?,email=?,phone=?,hobby=?,avatar=?"
                     + "      Where userid=? ";
             mPst = mConn.prepareStatement(strSQL);
             mPst.setString(1, user.getUsername());
@@ -197,7 +215,8 @@ public class UserModel extends DBUtility implements Serializable{
             mPst.setString(3, user.getEmail());
             mPst.setString(4, user.getPhone());
             mPst.setString(5, user.getHobby());
-            mPst.setLong(6, user.getUserID());
+            mPst.setString(6, user.getAvatar());
+            mPst.setLong(7, user.getUserID());
             int r = mPst.executeUpdate();
             return r;
         } finally {

@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
@@ -23,7 +23,7 @@ import util.JsfUtil;
  * @author Mr.Son
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class SecurityController {
 
     User user;
