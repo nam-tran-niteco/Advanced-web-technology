@@ -5,7 +5,6 @@
  */
 package controller;
 
-import entity.Post;
 import entity.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,16 +15,15 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.FriendModel;
-import model.PostModel;
 import model.UserModel;
 
 /**
  *
  * @author Tran
  */
-@ManagedBean(name = "profile")
+@ManagedBean(name = "friendController")
 @ViewScoped
-public class UserProfileController {
+public class FriendController {
 
     /**
      * Fields
@@ -33,14 +31,12 @@ public class UserProfileController {
     private User mloggedUser;
     private UserModel muserModel;
     private FriendModel mfriendModel;
-    private PostModel mpostModel;
     private ArrayList<User> mlistUser;
-    private ArrayList<Post> mlistPosts;
 
     /**
      * Constructor
      */
-    public UserProfileController() {
+    public FriendController() {
 
         /**
          * Get current logged user info from session
@@ -55,25 +51,10 @@ public class UserProfileController {
              */
             muserModel = new UserModel();
             mfriendModel = new FriendModel();
-            mpostModel = new PostModel();
             mloggedUser = muserModel.getUserByID(mloggedUser);
             mlistUser = muserModel.getAllUserByUserId(mloggedUser);
-            mlistPosts = mpostModel.getPostsbyUserId(mloggedUser);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * User profile Updated
-     */
-    public void saveUser() {
-        if (mloggedUser != null && muserModel != null) {
-            try {
-                muserModel.updateUser(mloggedUser);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Logger.getLogger(FriendController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -88,7 +69,7 @@ public class UserProfileController {
                 mfriendModel.addFriend(mloggedUser, friend);
                 mlistUser = muserModel.getAllUserByUserId(mloggedUser);
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FriendController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -105,7 +86,7 @@ public class UserProfileController {
                 mfriendModel.updateFriendStatus(mloggedUser, friend, status);
                 mlistUser = muserModel.getAllUserByUserId(mloggedUser);
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FriendController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -135,14 +116,6 @@ public class UserProfileController {
 
     public void setMlistUser(ArrayList<User> mlistUser) {
         this.mlistUser = mlistUser;
-    }
-
-    public ArrayList<Post> getMlistPosts() {
-        return mlistPosts;
-    }
-
-    public void setMlistPosts(ArrayList<Post> mlistPosts) {
-        this.mlistPosts = mlistPosts;
     }
     
 }

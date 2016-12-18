@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/layout/keepmemo_template.xhtml">
+
+        <ui:define name="title"> - Post</ui:define>
+
+        <ui:define name="intro-header">
+            <header class="intro-header" style="background-image: url('/public/images/post-bg.jpg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <div class="post-heading">
+                                <h1>#{singlepost.mpost.title}</h1>
+                                <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+                                <span class="meta">Posted on #{singlepost.mpost.update_at}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </ui:define>
+
+        <ui:define name="main-content">
+            <!-- Post Content -->
+            <article>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <h:outputText escape="false" value="#{singlepost.mpost.content}" />
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <hr/>
+        </ui:define>
+
+    </ui:composition>
+</html>

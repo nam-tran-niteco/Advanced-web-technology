@@ -81,6 +81,10 @@ public class SecurityController {
             if ( isAddSuccess == 1 ) {
                 nh.handleNavigation(context, null, "login");
             }
+            else {
+                JsfUtil.addErrorMessage("Username already exists");
+                Logger.getLogger(SecurityController.class.getName()).log(Level.SEVERE, null, "Username already exists");
+            }
         } catch (ClassNotFoundException | SQLException ex) {
             JsfUtil.addErrorMessage(ex.getMessage());
             Logger.getLogger(SecurityController.class.getName()).log(Level.SEVERE, null, ex);

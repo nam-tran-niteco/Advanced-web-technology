@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  *
@@ -13,15 +14,15 @@ import java.io.Serializable;
  */
 public class Post implements Serializable{
     
-    private int postid;
+    private long postid;
     private String title;
     private String content;
-    private String publish_at;
-    private String update_at;
+    private Timestamp publish_at;
+    private Timestamp update_at;
     private int status;
-    private int userid;
+    private long userid;
 
-    public Post(int postid, String title, String content, String publish_at, int status, int userid) {
+    public Post(long postid, String title, String content, Timestamp publish_at, int status, long userid) {
         this.postid = postid;
         this.title = title;
         this.content = content;
@@ -33,19 +34,19 @@ public class Post implements Serializable{
     public Post() {
     }
 
-    public int getPostid() {
+    public long getPostid() {
         return postid;
     }
 
-    public void setPostid(int postid) {
+    public void setPostid(long postid) {
         this.postid = postid;
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 
@@ -65,19 +66,19 @@ public class Post implements Serializable{
         this.content = content;
     }
 
-    public String getPublish_at() {
+    public Timestamp getPublish_at() {
         return publish_at;
     }
 
-    public void setPublish_at(String publish_at) {
+    public void setPublish_at(Timestamp publish_at) {
         this.publish_at = publish_at;
     }
 
-    public String getUpdate_at() {
+    public Timestamp getUpdate_at() {
         return update_at;
     }
 
-    public void setUpdate_at(String update_at) {
+    public void setUpdate_at(Timestamp update_at) {
         this.update_at = update_at;
     }
 

@@ -4,5 +4,5 @@
  * and open the template in the editor.
  */
 $(document).ready(function(){
-   CKEDITOR.replace('post-content');
+   CKEDITOR.replace('post-info:post-content');
 });

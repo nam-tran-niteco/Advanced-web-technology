@@ -20,8 +20,8 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>role</from-outcome>
-            <to-view-id>pages/role.xhtml</to-view-id>
+            <from-outcome>error</from-outcome>
+            <to-view-id>pages/404.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

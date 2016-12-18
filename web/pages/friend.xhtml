@@ -39,7 +39,7 @@ and open the template in the editor.
 
                         <h2>All user</h2>
 
-                        <ui:repeat value="#{profile.mlistUser}" var="user" >
+                        <ui:repeat value="#{friendController.mlistUser}" var="user" >
                             <div class="userlist-item">
                                 <img class="avatar" src="#{user.avatar}" alt=""/>
 
@@ -51,8 +51,8 @@ and open the template in the editor.
 
                                 <div class="friend-status">
                                     <h:form>
-                                        <h:commandLink class="add-friend" actionListener="#{profile.addFriend(user)}" value="ADD FRIEND" rendered="#{user.friendStatus == 0}"/>
-                                        <h:commandLink class="accept-request" actionListener="#{profile.updateFriendStatus(user, 1)}" value="ACCEPT REQUEST" rendered="#{user.friendStatus == 3}"/>
+                                        <h:commandLink class="add-friend" actionListener="#{friendController.addFriend(user)}" value="ADD FRIEND" rendered="#{user.friendStatus == 0}"/>
+                                        <h:commandLink class="accept-request" actionListener="#{friendController.updateFriendStatus(user, 1)}" value="ACCEPT REQUEST" rendered="#{user.friendStatus == 3}"/>
                                         <h:outputText class="pending" value="PENDING" rendered="#{user.friendStatus == 2}"/>
                                     </h:form>
                                 </div>

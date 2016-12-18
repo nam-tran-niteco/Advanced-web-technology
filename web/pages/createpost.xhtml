@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/layout/keepmemo_template.xhtml">
+
+        <ui:define name="title"> - About</ui:define>
+
+        <ui:define name="intro-header">
+            <header class="intro-header" style="background-image: url('/public/images/home-bg.jpg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <div class="site-heading">
+                                <h1>Create a post</h1>
+                                <hr class="small"/>
+                                <span class="subheading">What did you do today?</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </ui:define>
+
+        <ui:define name="main-content">
+            <!-- Main Content -->
+            <div class="container" id="about">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                        <h:form class="post-info" id="post-info">
+                            <div class="post-title post-info-row">
+                                <label for="post-title">Title</label>
+                                <h:inputText id="post-title" required="true" value="#{postcreate.mpost.title}"/>
+                            </div>
+                            <div class="post-content post-info-row">
+                                <h:inputTextarea id="post-content"  value="#{postcreate.mpost.content}"></h:inputTextarea>
+                            </div>
+                            <div class="post-status post-info-row">
+                                <label for="post-status"></label>
+                                <h:selectOneMenu value="#{postcreate.mpost.status}">
+                                    <f:selectItems value="#{postcreate.mpostStatus}"/>
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="form-buttons">
+                                <!--<a class="edit-button btn btn-default">Edit</a>-->
+                                <h:commandButton type="submit" styleClass="btn user-info-submit" value="Publish" 
+                                                 action="#{postcreate.addPost()}"></h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </ui:define>
+        
+        <ui:define name="addition-script">
+            <script src="/public/js/ckeditor.js"></script>
+            <script src="/public/js/ckeditor_config.js"></script>
+        </ui:define>
+    </ui:composition>
+
+</html>

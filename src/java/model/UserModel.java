@@ -151,12 +151,14 @@ public class UserModel extends DBUtility implements Serializable {
         } finally {
             closeAll();
         }
-        if ( !mlistUser.isEmpty() ) Collections.sort(mlistUser, new Comparator<User>() {
-            @Override
-            public int compare(User u1, User u2) {
-                return u1.getUsername().compareToIgnoreCase(u2.getUsername());
-            }
-        });
+        if (!mlistUser.isEmpty()) {
+            Collections.sort(mlistUser, new Comparator<User>() {
+                @Override
+                public int compare(User u1, User u2) {
+                    return u1.getUsername().compareToIgnoreCase(u2.getUsername());
+                }
+            });
+        }
         return mlistUser;
     }
 
@@ -174,7 +176,14 @@ public class UserModel extends DBUtility implements Serializable {
     public int addUser(User user) throws ClassNotFoundException, SQLException {
         try {
             openConnection();
-            String strSQL = "INSERT INTO " + Constant.USER_TABLE + " " + "(username, password, fullname, email, phone, hobby, avatar)"
+            String strSQL = "SELECT userid FROM user "
+                    + "WHERE username = ?";
+            mPst = mConn.prepareStatement(strSQL);
+            mPst.setString(1, user.getUsername());
+            mRs = mPst.executeQuery();
+            if ( mRs.next() ) return 0;
+            
+            strSQL = "INSERT INTO " + Constant.USER_TABLE + " " + "(username, password, fullname, email, phone, hobby, avatar)"
                     + "VALUES (?, md5(?),?,?,?,?,?)";
             mPst = mConn.prepareStatement(strSQL);
             mPst.setString(1, user.getUsername());
