@@ -465,11 +465,45 @@ body {
 .userlist-item .info {
     margin-left: 20px;
 }
-.userlist-item .info .friend {
+.userlist-item .info a:hover {
+    color: rgb(60, 200, 150);
+    text-decoration: none;
+}
+.userlist-item .info .friend a{
     color: rgb(60, 135, 190);
+}
+.userlist-item .info .friend a:hover {
+    color: rgb(70, 120, 255);
 }
 .userlist-item .friend-status {
     float: right;
     margin-right: 40px;
     margin-top: 20px;
 }
+
+/*----------------------------------------
+    POST PAGE
+------------------------------------------*/
+.comment-area .post-preview {
+    border: solid #eee;
+    border-width: 0 0 1px;
+    padding: 0 0 20px;
+}
+.comment-area .post-preview .comment-content {
+    font-size: 29px;
+}
+.comment-area .post-preview .comment-meta {
+    font-style: oblique;
+}
+.comment-area .comment-form {
+    padding: 20px 0;
+}
+.comment-area .comment-form textarea {
+    border: 1px solid;
+    box-shadow: none;
+    font-size: 17px;
+    padding: 20px;
+    width: 100%;
+}
+
+

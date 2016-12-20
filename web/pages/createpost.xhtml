@@ -39,17 +39,26 @@ and open the template in the editor.
 
                         <h:form class="post-info" id="post-info">
                             <div class="post-title post-info-row">
-                                <label for="post-title">Title</label>
-                                <h:inputText id="post-title" required="true" value="#{postcreate.mpost.title}"/>
+                                <p:inputText id="post-title" required="true" value="#{postcreate.mpost.title}" placeholder="Title"/>
                             </div>
                             <div class="post-content post-info-row">
                                 <h:inputTextarea id="post-content"  value="#{postcreate.mpost.content}"></h:inputTextarea>
                             </div>
                             <div class="post-status post-info-row">
-                                <label for="post-status"></label>
-                                <h:selectOneMenu value="#{postcreate.mpost.status}">
+                                <label for="post-status">Who can see this post?</label>
+                                <h:selectOneMenu id="post-status" value="#{postcreate.mpost.status}">
                                     <f:selectItems value="#{postcreate.mpostStatus}"/>
                                 </h:selectOneMenu>
+                            </div>
+                            <div class="post-protected1 post-info-row">
+                                <label for="post-protected1">Who are they?</label>
+                                <h:selectManyMenu id="post-protected1" value="#{postcreate.friendidCanSeePost}" >
+                                    <f:selectItems value="#{postcreate.friendList}"/>
+                                </h:selectManyMenu>
+                            </div>
+                            <div class="post-comment post-info-row">
+                                <label for="post-comment">Could they comment?</label>
+                                <h:selectBooleanCheckbox value="#{postcreate.mpost.can_comment}" ></h:selectBooleanCheckbox>
                             </div>
                             <div class="form-buttons">
                                 <!--<a class="edit-button btn btn-default">Edit</a>-->

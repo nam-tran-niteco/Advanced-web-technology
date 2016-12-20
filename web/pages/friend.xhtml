@@ -44,7 +44,9 @@ and open the template in the editor.
                                 <img class="avatar" src="#{user.avatar}" alt=""/>
 
                                 <div class="info">
-                                    <h3 class="username #{user.friendStatus == 1?'friend':''}">#{user.username}</h3>
+                                    <h3 class="username #{user.friendStatus == 1?'friend':''}">
+                                        <h:outputLink value="/pages/user.xhtml?id=#{user.userID}" >#{user.username}</h:outputLink>
+                                    </h3>
                                     <h4 class="phone">#{user.phone}</h4>
                                     <p class="hobby">#{user.hobby}</p>
                                 </div>

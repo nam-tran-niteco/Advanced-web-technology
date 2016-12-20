@@ -9,6 +9,8 @@ import entity.User;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import util.Constant;
 
 /**
@@ -169,22 +171,24 @@ public class FriendModel extends DBUtility implements Serializable{
      * @throws java.sql.SQLException
      */
     ////////////////////////////////////////////////////////
-    public boolean getFriendList(User user) throws ClassNotFoundException, SQLException {
-        boolean isSuccess = false;
+    public Map<String, Long> getFriendList(User user) throws ClassNotFoundException, SQLException {
+        Map<String, Long> friendList = new HashMap<>();
         try {
             openConnection();
-            String strSQL = "SELECT * " + Constant.FRIEND_TABLE + ", " + Constant.USER_TABLE
-                    + " WHERE " + Constant.FRIEND_TABLE + ".userid = ? AND friendid = ?";
+            String strSQL = "SELECT user.userid, user.username "
+                    + "FROM user, friend "
+                    + "WHERE user.userid = friend.friendid AND friend.userid = ?";
             
             mPst = mConn.prepareStatement(strSQL);
             mPst.setLong(1, user.getUserID());
-            mPst.executeUpdate();
-            
-            isSuccess = true;
+            mRs = mPst.executeQuery();
+            while ( mRs.next() ) {
+                friendList.put( mRs.getString("username"), mRs.getLong("userid") );
+            }
         } finally {
             closeAll();
         }
-        return isSuccess;
+        return friendList;
     }
     
     ////////////////////////////////////////////////////////

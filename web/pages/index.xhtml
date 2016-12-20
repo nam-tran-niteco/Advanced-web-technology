@@ -38,7 +38,7 @@ and open the template in the editor.
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <ui:repeat value="#{profile.mlistPosts}" var="post" >
                             <div class="post-preview">
-                                <a href="postdetail.xhtml?id=#{post.postid}">
+                                <a href="/pages/postdetail.xhtml?id=#{post.postid}">
                                     <h2 class="post-title">
                                         #{post.title}
                                     </h2>
@@ -97,11 +97,11 @@ and open the template in the editor.
                         </div>
                         <hr/>-->
                         <!-- Pager -->
-                        <ul class="pager">
+<!--                        <ul class="pager">
                             <li class="next">
                                 <a href="#">Older Posts</a>
                             </li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>

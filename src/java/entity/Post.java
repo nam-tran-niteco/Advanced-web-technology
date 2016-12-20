@@ -21,6 +21,7 @@ public class Post implements Serializable{
     private Timestamp update_at;
     private int status;
     private long userid;
+    private boolean can_comment;
 
     public Post(long postid, String title, String content, Timestamp publish_at, int status, long userid) {
         this.postid = postid;
@@ -88,5 +89,13 @@ public class Post implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
-    }    
+    } 
+
+    public boolean isCan_comment() {
+        return can_comment;
+    }
+
+    public void setCan_comment(boolean can_comment) {
+        this.can_comment = can_comment;
+    }
 }

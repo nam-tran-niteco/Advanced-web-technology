@@ -9,8 +9,10 @@ import entity.Post;
 import entity.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -23,24 +25,26 @@ import model.UserModel;
  *
  * @author Tran
  */
-@ManagedBean(name = "profile")
+@ManagedBean(name = "userController")
 @ViewScoped
-public class UserProfileController {
+public class UserController {
 
     /**
      * Fields
      */
     private User mloggedUser;
+    private User msiteUser;
     private UserModel muserModel;
     private FriendModel mfriendModel;
     private PostModel mpostModel;
-    private ArrayList<User> mlistUser;
     private ArrayList<Post> mlistPosts;
+
+    private boolean isFriend;
 
     /**
      * Constructor
      */
-    public UserProfileController() {
+    public UserController() {
 
         /**
          * Get current logged user info from session
@@ -48,6 +52,11 @@ public class UserProfileController {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         mloggedUser = (User) session.getAttribute("user");
 
+        /**
+         * Get parameters from url
+         */
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         try {
 
             /**
@@ -56,11 +65,31 @@ public class UserProfileController {
             muserModel = new UserModel();
             mfriendModel = new FriendModel();
             mpostModel = new PostModel();
+
+            if (params.get("id") != null) {
+                try {
+                    msiteUser = new User();
+                    msiteUser.setUserID( Long.parseLong(params.get("id")) );
+                    msiteUser = muserModel.getUserByID(msiteUser);
+                } catch (NumberFormatException | ClassNotFoundException | SQLException ex) {
+                    NavigationHandler nh = context.getApplication().getNavigationHandler();
+                    nh.handleNavigation(context, null, "error");
+                }
+            } else {
+                NavigationHandler nh = context.getApplication().getNavigationHandler();
+                nh.handleNavigation(context, null, "index");
+            }
+
             mloggedUser = muserModel.getUserByID(mloggedUser);
-            mlistUser = muserModel.getAllUserByUserId(mloggedUser);
-            mlistPosts = mpostModel.getPostsbyUserId(mloggedUser);
+            
+            // Check thw relationship between logged User and a searched user
+            isFriend = mfriendModel.isFriend(mloggedUser, msiteUser);
+            
+            // get all posts by the searched user id
+            mlistPosts = mpostModel.getPostsbySiteUserId(msiteUser, mloggedUser, isFriend);
+            
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,44 +101,11 @@ public class UserProfileController {
             try {
                 muserModel.updateUser(mloggedUser);
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    /**
-     * void addFriend
-     *
-     * @param friend
-     */
-    public void addFriend(User friend) {
-        if (friend != null) {
-            try {
-                mfriendModel.addFriend(mloggedUser, friend);
-                mlistUser = muserModel.getAllUserByUserId(mloggedUser);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    /**
-     * updateFriendStatus
-     *
-     * @param friend
-     * @param status
-     */
-    public void updateFriendStatus(User friend, int status) {
-        if (friend != null) {
-            try {
-                mfriendModel.updateFriendStatus(mloggedUser, friend, status);
-                mlistUser = muserModel.getAllUserByUserId(mloggedUser);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
     /**
      * Getter and Setter
      */
@@ -121,20 +117,20 @@ public class UserProfileController {
         this.mloggedUser = mloggedUser;
     }
 
+    public User getMsiteUser() {
+        return msiteUser;
+    }
+
+    public void setMsiteUser(User msiteUser) {
+        this.msiteUser = msiteUser;
+    }
+
     public UserModel getMuserModel() {
         return muserModel;
     }
 
     public void setMuserModel(UserModel muserModel) {
         this.muserModel = muserModel;
-    }
-
-    public ArrayList<User> getMlistUser() {
-        return mlistUser;
-    }
-
-    public void setMlistUser(ArrayList<User> mlistUser) {
-        this.mlistUser = mlistUser;
     }
 
     public ArrayList<Post> getMlistPosts() {
@@ -144,5 +140,5 @@ public class UserProfileController {
     public void setMlistPosts(ArrayList<Post> mlistPosts) {
         this.mlistPosts = mlistPosts;
     }
-    
+
 }
