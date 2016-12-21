@@ -37,34 +37,46 @@ and open the template in the editor.
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                            <div class="post-content">
-                                <h:outputText escape="false" value="#{singlepost.mpost.content}" />
+
+                            <div class="edit">
+                                <h:outputLink rendered="#{singlepost.canEdit}" 
+                                              value="/pages/createpost.xhtml?id=#{singlepost.mpost.postid}">Edit</h:outputLink>
                             </div>
 
-                            <hr/>
+                            <h:panelGroup rendered="#{not singlepost.canSeePost}" class="alert-message">
+                                <h:outputText value="You do not have permission to see this post" />
+                            </h:panelGroup>
 
-                            <div class="comment-area">
-
-                                <div class="comment-list">
-                                    <h2>Comment</h2>
-                                    <ui:repeat value="#{singlepost.commentList}" var="comment">
-                                        <div class="post-preview">
-                                            <p class="comment-content">#{comment.content}</p>
-                                            <p class="comment-meta">Posted on #{comment.publish_at}</p>
-                                        </div>
-                                    </ui:repeat>
+                            <h:panelGroup class="post-detail" rendered="#{singlepost.canSeePost}">
+                                <div class="post-content">
+                                    <h:outputText escape="false" value="#{singlepost.mpost.content}" />
                                 </div>
 
-                                <h:form class="comment-form" id="comment-form" rendered="#{singlepost.mpost.can_comment}">
-                                    <p:inputTextarea placeholder="Your comment" value="#{singlepost.comment.content}"/>
-                                    <h:commandButton type="submit" styleClass="btn comment-submit" value="Comment" 
-                                                     action="#{singlepost.addComment()}">
-                                        <f:param name="id" value="#{singlepost.mpost.postid}"/>
-                                    </h:commandButton>
-                                </h:form>
-                                
-                                <h:outputText value="You can not comment on this post" rendered="#{not singlepost.mpost.can_comment}" />
-                            </div>
+                                <hr/>
+
+                                <div class="comment-area">
+
+                                    <div class="comment-list">
+                                        <h2>Comment</h2>
+                                        <ui:repeat value="#{singlepost.commentList}" var="comment">
+                                            <div class="post-preview">
+                                                <p class="comment-content">#{comment.content}</p>
+                                                <p class="comment-meta">Posted on #{comment.publish_at}</p>
+                                            </div>
+                                        </ui:repeat>
+                                    </div>
+
+                                    <h:form class="comment-form" id="comment-form" rendered="#{singlepost.mpost.can_comment}">
+                                        <p:inputTextarea placeholder="Your comment" value="#{singlepost.comment.content}"/>
+                                        <h:commandButton type="submit" styleClass="btn comment-submit" value="Comment" 
+                                                         action="#{singlepost.addComment()}">
+                                            <f:param name="id" value="#{singlepost.mpost.postid}"/>
+                                        </h:commandButton>
+                                    </h:form>
+
+                                    <h:outputText value="You can not comment on this post" rendered="#{not singlepost.mpost.can_comment}" />
+                                </div>
+                            </h:panelGroup>
                         </div>
                     </div>
                 </div>

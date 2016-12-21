@@ -33,10 +33,12 @@ and open the template in the editor.
 
         <ui:define name="main-content">
             <!-- Main Content -->
-            <div class="container" id="about">
+            <div class="container" id="post-create">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
+                        <h:outputText class="form-message #{postcreate.success == true? 'success':'' }" value="#{postcreate.message}"/>
+                        
                         <h:form class="post-info" id="post-info">
                             <div class="post-title post-info-row">
                                 <p:inputText id="post-title" required="true" value="#{postcreate.mpost.title}" placeholder="Title"/>
@@ -51,10 +53,12 @@ and open the template in the editor.
                                 </h:selectOneMenu>
                             </div>
                             <div class="post-protected1 post-info-row">
-                                <label for="post-protected1">Who are they?</label>
-                                <h:selectManyMenu id="post-protected1" value="#{postcreate.friendidCanSeePost}" >
-                                    <f:selectItems value="#{postcreate.friendList}"/>
-                                </h:selectManyMenu>
+                                <h:panelGroup rendered="#{not postcreate.edit}">
+                                    <label for="post-protected1">Who are they?</label>
+                                    <h:selectManyMenu id="post-protected1" value="#{postcreate.friendidCanSeePost}" >
+                                        <f:selectItems value="#{postcreate.friendList}"/>
+                                    </h:selectManyMenu>
+                                </h:panelGroup>
                             </div>
                             <div class="post-comment post-info-row">
                                 <label for="post-comment">Could they comment?</label>
@@ -63,7 +67,9 @@ and open the template in the editor.
                             <div class="form-buttons">
                                 <!--<a class="edit-button btn btn-default">Edit</a>-->
                                 <h:commandButton type="submit" styleClass="btn user-info-submit" value="Publish" 
-                                                 action="#{postcreate.addPost()}"></h:commandButton>
+                                                 action="#{postcreate.addPost()}" rendered="#{not postcreate.edit}"></h:commandButton>
+                                <h:commandButton type="submit" styleClass="btn user-info-submit" value="Update" 
+                                                 action="#{postcreate.updatePost()}" rendered="#{postcreate.edit}"></h:commandButton>
                             </div>
                         </h:form>
                     </div>
@@ -71,7 +77,7 @@ and open the template in the editor.
             </div>
             <hr/>
         </ui:define>
-        
+
         <ui:define name="addition-script">
             <script src="/public/js/ckeditor.js"></script>
             <script src="/public/js/ckeditor_config.js"></script>

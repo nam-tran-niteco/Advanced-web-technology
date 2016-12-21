@@ -506,4 +506,23 @@ body {
     width: 100%;
 }
 
+.edit a {
+    font-size: 25px;
+    color: green;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* POST CREATE */
+#post-create .post-title input {
+    width: 100%;
+    font-size: 18px;
+    padding: 8px 20px;
+}
+#post-create .post-info-row {
+    margin: 15px 0;
+}
+#post-create .post-info-row label {
+    margin-right: 20px;
+}
 

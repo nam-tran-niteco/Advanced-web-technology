@@ -101,37 +101,51 @@ public class PostModel extends DBUtility implements Serializable {
         return posts;
     }
 
-//    /**
-//     * Get All posts by friend id
-//     *
-//     * @param user
-//     * @param friend
-//     * @return ArrayList
-//     * @throws java.lang.ClassNotFoundException
-//     * @throws java.sql.SQLException
-//     */
-//    public ArrayList<Post> getPostsbyFriendId(User user, User friend) throws ClassNotFoundException, SQLException {
-//        openConnection();
-//        ArrayList<Post> posts = new ArrayList<>();
-//        String sql = "SELECT * "
-//                + "  FROM post, postmeta WHERE post.postid = postmeta.postid AND postmeta.userid = ? AND friendid = ?";
-//        mPst = mConn.prepareStatement(sql);
-//        mPst.setLong(1, user.getUserID());
-//        mPst.setLong(2, friend.getUserID());
-//        mRs = mPst.executeQuery();
-//        while (mRs.next()) {
-//            Post post = new Post();
-//            post.setPostid(mRs.getLong("postid"));
-//            post.setTitle(mRs.getString("title"));
-//            post.setContent(mRs.getString("content"));
-//            post.setPublish_at(mRs.getTimestamp("publish_at"));
-//            post.setStatus(mRs.getInt("status"));
-//            post.setUserid(mRs.getLong("userid"));
-//            post.setCan_comment(mRs.getBoolean("can_comment"));
-//        }
-//        closeAll();
-//        return posts;
-//    }
+    /**
+     * A user edit his/her own post
+     *
+     * @param userid
+     * @param postid
+     * @return boolean
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public boolean canEditPost(long postid, long userid) throws ClassNotFoundException, SQLException {
+        openConnection();
+        boolean canEdit = false;
+        String sql = "SELECT * "
+                + " FROM post WHERE postid = ? AND userid = ? ";
+        mPst = mConn.prepareStatement(sql);
+        mPst.setLong(1, postid);
+        mPst.setLong(2, userid);
+        mRs = mPst.executeQuery();
+        if( mRs.next() ) canEdit = true;
+        closeAll();
+        return canEdit;
+    }
+    
+    /**
+     * A user in list can see this post if post status = 1
+     *
+     * @param friendid
+     * @param postid
+     * @return boolean
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public boolean canSeePost(long postid, long friendid) throws ClassNotFoundException, SQLException {
+        openConnection();
+        boolean canSeePost = false;
+        String sql = "SELECT * "
+                + " FROM postmeta WHERE postid = ? AND friendid = ? ";
+        mPst = mConn.prepareStatement(sql);
+        mPst.setLong(1, postid);
+        mPst.setLong(2, friendid);
+        mRs = mPst.executeQuery();
+        if( mRs.next() ) canSeePost = true;
+        closeAll();
+        return canSeePost;
+    }
 
     /**
      * Get post by post id
@@ -224,14 +238,15 @@ public class PostModel extends DBUtility implements Serializable {
         openConnection();
         int result;
         String sql = "UPDATE post "
-                + "SET title = ?, content = ?, update_at = ?, status = ? "
+                + "SET title = ?, content = ?, update_at = ?, status = ?, can_comment = ? "
                 + "WHERE postid = ?";
         mPst = mConn.prepareStatement(sql);
         mPst.setString(1, post.getTitle());
         mPst.setString(2, post.getContent());
         mPst.setTimestamp(3, post.getUpdate_at());
         mPst.setInt(4, post.getStatus());
-        mPst.setLong(5, post.getPostid());
+        mPst.setBoolean(5, post.isCan_comment());
+        mPst.setLong(6, post.getPostid());
         result = mPst.executeUpdate();
         closeAll();
         return result;
